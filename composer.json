@@ -1,5 +1,5 @@
 {
-    "name": "mindofmicah/GoodReads",
+    "name": "mindofmicah/goodreads",
     "type": "library",
     "description": "Slowly, but surely implementing the GoodReads api into php",
     "license": "MIT",
