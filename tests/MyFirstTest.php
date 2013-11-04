@@ -6,9 +6,11 @@ class MyFirstTest extends PHPUnit_Framework_TestCase
 {
     public function testItWorks()
     {
+        $mock = M::mock('mindofmicah\GoodReads\Curl');
+        $mock->shouldReceive('fetchInfo')->once()->andReturn('tacos');
         $response = Request::shelves('list', array(
             'id' => 21308373
-        ));
+        ), $mock);
 
         $this->assertInstanceOf('mindofmicah\GoodReads\Response', $response);
         $this->assertTrue(is_array($response->get('shelves')));
