@@ -17,6 +17,10 @@ class Response
     {
         $this->properties[$property] = $value;
     }
+    public function setHeader($key, $value)
+    {
+        $this->headers[$key] = $value;
+    }
 
     public function get($key)
     {
@@ -25,11 +29,17 @@ class Response
     public static function buildFromCurlResponse($response)
     {
         $response = new self;
+        $response->setHeader('authentication', 'true');
+        $response->setHeader('method','method-name');
+        $response->setHeader('key', 'secret-key');
         return $response;
     }
     
-    public function headers()
+    public function headers($key = null)
     {
-        return $this->headers;    
+        if (is_null($key)) {
+           return $this->headers;    
+        }
+        return $this->headers[$key];
     }
 }
