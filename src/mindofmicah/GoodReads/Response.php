@@ -26,12 +26,13 @@ class Response
     {
         return $this->properties[$key];
     }
-    public static function buildFromCurlResponse($response)
+    public static function buildFromCurlResponse($curl_response)
     {
         $response = new self;
-        $response->setHeader('authentication', 'true');
-        $response->setHeader('method','method-name');
-        $response->setHeader('key', 'secret-key');
+        $t = new \SimpleXMLElement($curl_response);
+        foreach ($t->Request[0] as $k=>$v) {
+            $response->setHeader($k, $v);
+        }
         return $response;
     }
     
