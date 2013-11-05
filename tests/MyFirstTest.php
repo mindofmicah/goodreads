@@ -1,5 +1,6 @@
 <?php
 use mindofmicah\GoodReads\Request;
+use mindofmicah\GoodReads\ResponseObj;
 use Mockery as m;
 
 class MyFirstTest extends PHPUnit_Framework_TestCase
@@ -13,13 +14,15 @@ class MyFirstTest extends PHPUnit_Framework_TestCase
         ), $mock);
 
         $this->assertInstanceOf('mindofmicah\GoodReads\Response', $response);
-        $this->assertTrue(is_array($response->get('shelves')));
+        $this->assertInstanceOf('mindofmicah\GoodReads\ResponseObj',($response->get('shelves')));
 
         $this->assertEquals('shelf_list', $response->headers('method'));
-        $first_shelf = current($response->get('shelves'));
+        $first_shelf = $response->get('shelves');
         $this->assertInstanceOf('mindofmicah\GoodReads\ResponseObj', $first_shelf);
-        $this->assertEquals('user_shelf', $first_shelf->getType());
-        $this->assertEquals(7, count($response->get('shelves')));
+        $first_child = current($first_shelf->child());
+//        print_r($first_child);
+        $this->assertEquals('user_shelf', $first_child[0]->getType());
+        $this->assertEquals(1, count($response->get('shelves')));
 
     }
 }
